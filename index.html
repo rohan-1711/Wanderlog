@@ -31,11 +31,26 @@
                 you want to remember.</p>
             <button class="cta-btn">Start Your Journal</button>
         </section>
+        <section class="add-trip">
+  <h2>Add a Trip</h2>
+  <form id="trip-form">
+    <input type="text" id="title" placeholder="Trip title" required>
+    <input type="text" id="destination" placeholder="Destination" required>
+    <input type="date" id="date" required>
+    <textarea id="notes" placeholder="Notes"></textarea>
+    <button type="submit">Save Trip</button>
+  </form>
+</section>
+
+<section class="destinations-grid" id="destinations-grid">
+  <!-- trip cards will be rendered here by JavaScript -->
+</section>
     </main>
 
     <footer class="site-footer">
         <p> 2026 Wanderlog. Built for wanderers.</p>
     </footer>
+    <script src="script.js"></script>
 
 </body>
 
