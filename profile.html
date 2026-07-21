@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Work+Sans:wght@400;500&family=Space+Mono&display=swap"
+        rel="stylesheet">
+    <title>Wanderlog — Public Profile</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo">Wanderlog</div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#">Destinations</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="profile-header">
+            <h1 id="profile-name">Traveler's Journal</h1>
+            <p id="profile-bio">Sharing my travels with the world.</p>
+        </section>
+
+        <section class="destinations-grid" id="profile-trips">
+            <!-- trip cards will be rendered here -->
+        </section>
+
+        <p id="profile-empty" class="empty-state" style="display:none;">No trips shared yet.</p>
+    </main>
+
+    <footer class="site-footer">
+        <p> 2026 Wanderlog. Built for wanderers.</p>
+    </footer>
+
+    <script src="profile.js"></script>
+</body>
+</html>
