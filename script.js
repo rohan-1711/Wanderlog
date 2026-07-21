@@ -1,7 +1,25 @@
 let editingTripId = null;
-
+let currentPhotoBase64 = null;
 const tripForm = document.getElementById('trip-form');
 const grid = document.getElementById('destinations-grid');
+const photoInput = document.getElementById('photo');
+const previewContainer = document.getElementById('preview-container');
+
+// listen for file selection
+photoInput.addEventListener('change', function (e) {
+  const file = e.target.files[0];
+  
+  if (file) {
+    const reader = new FileReader();
+    
+    reader.onload = function (event) {
+      currentPhotoBase64 = event.target.result;
+      previewContainer.innerHTML = `<img src="${event.target.result}" alt="preview">`;
+    };
+    
+    reader.readAsDataURL(file);
+  }
+});
 
 tripForm.addEventListener('submit', function (e) {
   e.preventDefault();
@@ -16,7 +34,8 @@ tripForm.addEventListener('submit', function (e) {
         title: document.getElementById('title').value,
         destination: document.getElementById('destination').value,
         date: document.getElementById('date').value,
-        notes: document.getElementById('notes').value
+        notes: document.getElementById('notes').value,
+        photo: currentPhotoBase64 || trips[tripIndex].photo
       };
     }
     editingTripId = null;
@@ -27,18 +46,20 @@ tripForm.addEventListener('submit', function (e) {
       title: document.getElementById('title').value,
       destination: document.getElementById('destination').value,
       date: document.getElementById('date').value,
-      notes: document.getElementById('notes').value
+      notes: document.getElementById('notes').value,
+      photo: currentPhotoBase64
     });
   }
 
   localStorage.setItem('trips', JSON.stringify(trips));
   tripForm.reset();
+  currentPhotoBase64 = null;
+  previewContainer.innerHTML = '';
   tripForm.querySelector('button[type="submit"]').textContent = 'Save Trip';
   renderTrips();
-  
 });
 
-// EDIT button listener - OUTSIDE form submit
+// EDIT button listener
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('edit-btn')) {
     const tripId = parseInt(e.target.getAttribute('data-id'));
@@ -50,11 +71,18 @@ document.addEventListener('click', function (e) {
       document.getElementById('destination').value = tripToEdit.destination;
       document.getElementById('date').value = tripToEdit.date;
       document.getElementById('notes').value = tripToEdit.notes;
+      currentPhotoBase64 = tripToEdit.photo || null;
+      
+      if (tripToEdit.photo) {
+        previewContainer.innerHTML = `<img src="${tripToEdit.photo}" alt="preview">`;
+      }
+      
       editingTripId = tripId;
       tripForm.querySelector('button[type="submit"]').textContent = 'Update Trip';
     }
   }
 });
+
 // DELETE button listener
 document.addEventListener('click', function (e) {
   if (e.target.classList.contains('delete-btn')) {
@@ -68,6 +96,7 @@ document.addEventListener('click', function (e) {
     }
   }
 });
+
 function renderTrips() {
   const trips = JSON.parse(localStorage.getItem('trips')) || [];
   grid.innerHTML = '';
@@ -81,6 +110,7 @@ function renderTrips() {
     const card = document.createElement('div');
     card.classList.add('trip-card');
     card.innerHTML = `
+      ${trip.photo ? `<img src="${trip.photo}" alt="${trip.title}" class="trip-photo">` : ''}
       <h3>${trip.title}</h3>
       <p class="trip-destination">${trip.destination}</p>
       <p class="trip-date">${trip.date}</p>

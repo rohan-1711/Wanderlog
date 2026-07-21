@@ -338,3 +338,24 @@ body {
     padding: 0 15px;
   }
 }
+/* photo upload preview */
+#photo {
+  padding: 8px;
+}
+
+#preview-container {
+  margin: 15px 0;
+}
+
+#preview-container img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 6px;
+}
+.trip-photo {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px 6px 0 0;
+  margin: -20px -20px 15px -20px;
+}
